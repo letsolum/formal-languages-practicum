@@ -1,0 +1,33 @@
+class IO:
+    def __init__(self, file_mode=False, file_name='input.txt', test_mode=None, given_strings=None):
+        self.__file_mode = False
+        self.__test_mode = False
+        if test_mode:
+            self.__test_mode = True
+            self.__lines = given_strings
+        else:
+            self.__file_mode = file_mode
+            self.__file_name = file_name
+        self.__prev_line_in_file = -1
+
+    def get_line(self) -> str:
+        line = ''
+        if self.__file_mode:
+            self.__prev_line_in_file += 1
+            with open(self.__file_name, 'r') as f:
+                line = f.read().splitlines()[self.__prev_line_in_file]
+        elif self.__test_mode:
+            self.__prev_line_in_file += 1
+            return self.__lines[self.__prev_line_in_file]
+        else:
+            line = input()
+        return line
+
+    def output_line(self, line: str):
+        if self.__file_mode:
+            with open(self.__file_name, 'a') as f:
+                f.write(line + '\n')
+        elif self.__test_mode:
+            return line
+        else:
+            print(line)
