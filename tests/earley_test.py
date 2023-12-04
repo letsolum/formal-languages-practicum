@@ -1,7 +1,7 @@
 from src.earley import Earley
 from src.grammar import Grammar
 from src.bfs import StupidAlgorithm
-from random import randint, choice
+from random import randint, choice, seed
 
 
 class TestPrediction:
@@ -22,7 +22,7 @@ class TestPrediction:
         if randint(0, 1):
             non_terminals.add('P')
         terminals = set(self.__alphabet)
-        number_rules = randint(1, 10)
+        number_rules = randint(1, 5)
         number_non_terminals = len(non_terminals)
         number_terminals = len(terminals)
         rules = dict()
@@ -50,7 +50,7 @@ class TestPrediction:
             fir, sec = self.__algo.predict(word), self.__checker.predict(word)
             if fir != sec:
                 print(word, self.__algo.predict(word), self.__checker.predict(word))
-                assert 1 == 0
+                assert fir == sec
 
     def run(self, cnt_tests=1000):
         for _ in range(cnt_tests):

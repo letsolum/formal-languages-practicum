@@ -1,45 +1,54 @@
 import src.constants as const
-from src.io_manager import IO
+from src.io_manager import Input, Output
 
 
 class Grammar:
     def __init__(self,
-                 input_file=None, output_file=None,
                  other=None,
                  number_rules=None, number_term=None, number_non_term=None, start_non_terminal=None, rules=None,
-                 terminals=None, non_terminals=None, number_tests=None, list_words=[]):
+                 terminals=None, non_terminals=None, input_manager=None, output_manager=None):
         if other:
-            self._number_rules = other._number_rules
-            self._number_term = other._number_term
-            self._number_non_term = other._number_non_term
-            self._start_non_terminal = other._start_non_terminal
-            self._rules = other._rules
-            self._terminals = other._terminals
-            self._non_terminals = other._non_terminals
-            self._input_manager = other._input_manager
-            self._output_manager = other._output_manager
+            self.__copy_constructor(other)
         elif number_rules:
-            self._number_rules = number_rules
-            self._number_term = number_term
-            self._number_non_term = number_non_term
-            self._start_non_terminal = start_non_terminal
-            self._rules = rules
-            self._terminals = terminals
-            self._non_terminals = non_terminals
-            list_words.insert(0, str(number_tests))
-            self._input_manager = IO(test_mode=True, given_strings=list_words)
-            self._output_manager = IO(test_mode=True)
+            self.__value_constructor(number_rules, number_term, number_non_term, start_non_terminal, rules, 
+                                     terminals, non_terminals, input_manager, output_manager)
         else:
-            self._number_rules = 0
-            self._number_term = 0
-            self._number_non_term = 0
-            self._start_non_terminal = ' '
-            self._rules = dict()
-            self._terminals = set()
-            self._non_terminals = set()
-            self._input_manager = IO(input_file != '', input_file)
-            self._output_manager = IO(output_file != '', output_file)
+            self.__default_constructor(input_manager, output_manager)
         self._terminals.add('')
+
+    def __copy_constructor(self, other):
+        self._number_rules = other._number_rules
+        self._number_term = other._number_term
+        self._number_non_term = other._number_non_term
+        self._start_non_terminal = other._start_non_terminal
+        self._rules = other._rules
+        self._terminals = other._terminals
+        self._non_terminals = other._non_terminals
+        self._input_manager = other._input_manager
+        self._output_manager = other._output_manager
+
+    def __value_constructor(self, number_rules, number_term, number_non_term, start_non_terminal, rules, 
+                            terminals, non_terminals, input_manager, output_manager):
+        self._number_rules = number_rules
+        self._number_term = number_term
+        self._number_non_term = number_non_term
+        self._start_non_terminal = start_non_terminal
+        self._rules = rules
+        self._terminals = terminals
+        self._non_terminals = non_terminals
+        self._input_manager = input_manager
+        self._output_manager = output_manager
+
+    def __default_constructor(self, input_manager: Input, output_manager: Output):
+        self._number_rules = 0
+        self._number_term = 0
+        self._number_non_term = 0
+        self._start_non_terminal = ' '
+        self._rules = dict()
+        self._terminals = set()
+        self._non_terminals = set()
+        self._input_manager = input_manager
+        self._output_manager = output_manager
 
     def _read(self) -> None:
         try:

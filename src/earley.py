@@ -1,13 +1,14 @@
 from src.grammar import Grammar
 import src.constants as const
-
+from src.io_manager import Input, Output
 
 class Earley(Grammar):
     def __init__(self, input_file=None, output_file=None, G=None):
         if G:
             super().__init__(other=G)
         else:
-            super().__init__(input_file=input_file, output_file=output_file)
+            super().__init__(input_manager=Input(file_mode=input_file != '', file_name=input_file, test_mode=False),
+                             output_manager=Output(file_mode=output_file != '', file_name=output_file, test_mode=False))
 
     def fit(self, G: Grammar) -> None:  # should not be implemented
         pass

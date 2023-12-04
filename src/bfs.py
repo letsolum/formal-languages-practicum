@@ -1,5 +1,5 @@
 from src.grammar import Grammar
-
+import src.constants as const
 
 class StupidAlgorithm(Grammar):
     def __init__(self, G: Grammar):
@@ -26,7 +26,11 @@ class StupidAlgorithm(Grammar):
     def predict(self, word: str) -> bool:
         queue = [self._start_non_terminal]
         used = {queue[0]}
+        cnt = 0
         while len(queue) != 0:
+            cnt += 1
+            if cnt > const.STOP_STUPID:
+                return False
             now = queue[0]
             queue.pop(0)
             now_without_non_term = self.__get_real_string(now)

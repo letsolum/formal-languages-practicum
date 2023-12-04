@@ -5,3 +5,4 @@ CAPS_ALPHABET = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
                  'U', 'V', 'W', 'X', 'Y', 'Z'}
 S_ = '∆'
 DOT = '.'
+STOP_STUPID = 10000

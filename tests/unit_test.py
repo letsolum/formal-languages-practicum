@@ -2,6 +2,7 @@ import unittest
 import os
 from src.earley import Earley
 from src.grammar import Grammar
+from src.io_manager import Input, Output
 
 
 class TestEarleyAlgo(unittest.TestCase):
@@ -57,28 +58,31 @@ class TestEarleyAlgo(unittest.TestCase):
 
     def test_false_predict(self):
         algo = Earley(G=Grammar(number_rules=2, number_term=2, number_non_term=1, start_non_terminal='S',
-                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'}, number_tests=2,
-                                list_words=['aababb', 'aabbba']))
+                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'}))
         self.assertEqual(algo.predict('aabbba'), False)
 
     def test_number_tests_correctness(self):
+        input_manager = Input(test_mode=True, given_strings=['lol', 'aababb', 'aabbba'])
         algo = Earley(G=Grammar(number_rules=2, number_term=2, number_non_term=1, start_non_terminal='S',
-                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'}, number_tests='lol',
-                                list_words=['aababb', 'aabbba']))
+                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'},
+                                input_manager=input_manager))
         with self.assertRaises(Exception) as context:
             algo.test()
         self.assertEqual(str(context.exception), "Number of words to predict must be integer!")
 
     def test_multitest(self):
+        input_manager = Input(test_mode=True, given_strings=['2', 'aababb', 'aabbba'])
+        output_manager = Output(test_mode=True, file_mode=False)
         algo = Earley(G=Grammar(number_rules=2, number_term=2, number_non_term=1, start_non_terminal='S',
-                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'}, number_tests=2,
-                                list_words=['aababb', 'aabbba']))
+                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'},
+                                input_manager=input_manager, output_manager=output_manager))
         self.assertEqual(algo.test(), 'Yes\nNo\n')
 
     def test_grammar_info(self):
+        input_manager = Input(test_mode=True, given_strings=['2', 'aababb', 'aabbba'])
         algo = Earley(G=Grammar(number_rules=2, number_term=2, number_non_term=1, start_non_terminal='S',
-                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'}, number_tests=2,
-                                list_words=['aababb', 'aabbba']))
+                                rules={'S': ['aSbS', '']}, non_terminals={'S'}, terminals={'a', 'b'},
+                                input_manager=input_manager))
         algo.info()
 
 
