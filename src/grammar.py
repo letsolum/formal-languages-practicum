@@ -40,17 +40,8 @@ class Grammar:
         self._output_manager = output_manager
 
     def __default_constructor(self, input_manager: Input, output_manager: Output):
-        self._number_rules = 0
-        self._number_term = 0
-        self._number_non_term = 0
-        self._start_non_terminal = ' '
-        self._rules = dict()
-        self._terminals = set()
-        self._non_terminals = set()
         self._input_manager = input_manager
         self._output_manager = output_manager
-
-    def _read(self) -> None:
         try:
             self._number_non_term, self._number_term, self._number_rules = (
                 map(int, self._input_manager.get_line().split()))
@@ -66,6 +57,7 @@ class Grammar:
             if symb not in const.ALPHABET:
                 raise Exception(symb + ": Invalid terminal symbol!")
         self._terminals = set(raw_term)
+        self._rules = dict()
         for i in range(self._number_rules):
             new_rule = self._input_manager.get_line()
             if new_rule.find('->') == -1:

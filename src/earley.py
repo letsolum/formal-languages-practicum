@@ -71,9 +71,6 @@ class Earley(Grammar):
         situations.append(obj)
         return True
 
-    def input(self) -> None:
-        self._read()
-
     def test(self):
         number_words = 0
         try:

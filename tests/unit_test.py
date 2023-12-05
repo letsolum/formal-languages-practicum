@@ -11,7 +11,6 @@ class TestEarleyAlgo(unittest.TestCase):
             file.write('1 2 s')
         with self.assertRaises(Exception) as context:
             algo = Earley(input_file='input.txt', output_file='')
-            algo.input()
         self.assertEqual(str(context.exception), "Invalid type of ∣N∣/∣Σ∣/∣P∣!")
         os.remove('input.txt')
 
@@ -20,7 +19,6 @@ class TestEarleyAlgo(unittest.TestCase):
             file.write('1 2 2\nSaABC')
         with self.assertRaises(Exception) as context:
             algo = Earley(input_file='input.txt', output_file='')
-            algo.input()
         self.assertEqual(str(context.exception), "a: Invalid non-terminal symbol!")
         os.remove('input.txt')
 
@@ -29,7 +27,6 @@ class TestEarleyAlgo(unittest.TestCase):
             file.write('1 2 2\nSABC\nabc3S56dfg')
         with self.assertRaises(Exception) as context:
             algo = Earley(input_file='input.txt', output_file='')
-            algo.input()
         self.assertEqual(str(context.exception), "S: Invalid terminal symbol!")
         os.remove('input.txt')
 
@@ -38,7 +35,6 @@ class TestEarleyAlgo(unittest.TestCase):
             file.write('1 2 2\nSABC\nabc356dfg\nS -> a\nA - S')
         with self.assertRaises(Exception) as context:
             algo = Earley(input_file='input.txt', output_file='')
-            algo.input()
         self.assertEqual(str(context.exception), "Rule must contain '->'!")
         os.remove('input.txt')
 
@@ -47,7 +43,6 @@ class TestEarleyAlgo(unittest.TestCase):
             file.write('1 2 2\nSABC\nabc356dfg\nS -> a\n3 -> S\n')
         with self.assertRaises(Exception) as context:
             algo = Earley(input_file='input.txt', output_file='')
-            algo.input()
         self.assertEqual(str(context.exception), "Left part of rule must be non-terminal symbol!")
         os.remove('input.txt')
 
