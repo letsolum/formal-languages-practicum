@@ -47,13 +47,15 @@ class Earley(Grammar):
         changed = False
         for lhs, rhs, left in indicator[right]:
             dot_index = rhs.find(const.DOT)
-            if dot_index == len(rhs) - 1:
-                for prev_lhs, prev_rhs, prev_left in indicator[left]:
-                    prev_dot_index = prev_rhs.find(const.DOT + lhs)
-                    if prev_dot_index != -1:
-                        changed |= self.__add(indicator[right],
-                                              (prev_lhs, prev_rhs[:prev_dot_index] + lhs + const.DOT
-                                               + prev_rhs[prev_dot_index + 2:], prev_left))
+            if dot_index != len(rhs) - 1:
+                continue
+            for prev_lhs, prev_rhs, prev_left in indicator[left]:
+                prev_dot_index = prev_rhs.find(const.DOT + lhs)
+                if prev_dot_index == -1:
+                    continue
+                changed |= self.__add(indicator[right],
+                                    (prev_lhs, prev_rhs[:prev_dot_index] + lhs + const.DOT
+                                    + prev_rhs[prev_dot_index + 2:], prev_left))
         return changed
 
     def __iteration_scan(self, indicator: list, right: int, word: str):
