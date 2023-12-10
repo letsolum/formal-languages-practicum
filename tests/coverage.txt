@@ -1,0 +1,7 @@
+---------- coverage: platform darwin, python 3.11.5-final-0 ----------
+Name                Stmts   Miss  Cover
+---------------------------------------
+src/earley.py          71      1    99%
+src/grammar.py         74      3    96%
+---------------------------------------
+TOTAL                 145      4    97%
