@@ -1,4 +1,5 @@
 from src.earley import Earley
+from src.lr1 import LR1
 from src.grammar import Grammar
 from src.bfs import StupidAlgorithm
 from random import randint, choice, seed
@@ -13,8 +14,12 @@ class TestPrediction:
         self.__checker = None
         self.__algo = None
 
-    def __set_grammar(self, G: Grammar) -> None:
-        self.__algo = Earley(G=G)
+    def __set_grammar(self, G: Grammar, algo_type) -> None:
+        if algo_type == 'earley':
+            self.__algo = Earley(G=G)
+        else:
+            self.__algo = LR1(G=G)
+        self.__algo.fit()
         self.__checker = StupidAlgorithm(G=G)
 
     def __generate_grammar(self) -> Grammar:
@@ -52,10 +57,10 @@ class TestPrediction:
                 print(word, self.__algo.predict(word), self.__checker.predict(word))
                 assert fir == sec
 
-    def run(self, cnt_tests=1000):
+    def run(self, cnt_tests=1000, algo_type='earley'):
         for _ in range(cnt_tests):
             print('=========test info=========')
-            self.__set_grammar(G=self.__generate_grammar())
+            self.__set_grammar(G=self.__generate_grammar(), algo_type=algo_type)
             for row in self.__algo.info():
                 print(row)
             self.__generate_words()
@@ -64,4 +69,8 @@ class TestPrediction:
 
 if __name__ == '__main__':
     test = TestPrediction()
-    test.run()
+    algo_name = input("Chose algorithm, which you want to use [Earley (default), LR(1)]: ")
+    if algo_name == 'LR1':
+        test.run(algo_type='lr')
+    else:
+        test.run()
