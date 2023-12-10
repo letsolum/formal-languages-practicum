@@ -22,19 +22,21 @@ P
 
 ## Testing
 
-Get test-coverage of source code (which contains in [coverage.txt](tests/coverage.txt)):
+#### Get test-coverage of source code (which contains in [coverage.txt](tests/coverage.txt)):
 
 ```bash
 > pip3 install -r tests/requirements.txt
 > pytest --cov=./src/ tests/
 ```
 
-Run unit-tests:
+#### Run unit-tests:
 ```bash
 > python3 unit_test.py
 ```
 
-Run Earley-tests:
+#### Run prediction-tests:
 ```bash
 > python3 earley_test.py
 ```
+Than you have to choose one of algorithms (Earley or LR1) and testing will start automatically.
+

@@ -2,6 +2,7 @@ from src.grammar import Grammar
 import src.constants as const
 from src.io_manager import Input, Output
 
+
 class Earley(Grammar):
     def __init__(self, input_file=None, output_file=None, G=None):
         if G:
@@ -10,7 +11,7 @@ class Earley(Grammar):
             super().__init__(input_manager=Input(file_mode=input_file != '', file_name=input_file, test_mode=False),
                              output_manager=Output(file_mode=output_file != '', file_name=output_file, test_mode=False))
 
-    def fit(self, G: Grammar) -> None:  # should not be implemented
+    def fit(self) -> None:  # should not be implemented
         pass
 
     def predict(self, word: str) -> bool:
@@ -54,8 +55,8 @@ class Earley(Grammar):
                 if prev_dot_index == -1:
                     continue
                 changed |= self.__add(indicator[right],
-                                    (prev_lhs, prev_rhs[:prev_dot_index] + lhs + const.DOT
-                                    + prev_rhs[prev_dot_index + 2:], prev_left))
+                                      (prev_lhs, prev_rhs[:prev_dot_index] + lhs + const.DOT
+                                       + prev_rhs[prev_dot_index + 2:], prev_left))
         return changed
 
     def __iteration_scan(self, indicator: list, right: int, word: str):
